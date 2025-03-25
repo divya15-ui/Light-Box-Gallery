@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery with Lightbox</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .gallery img {
+            width: 100%;
+            height: auto;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+        /* Lightbox styles */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .lightbox img {
+        width:550px ;
+           border: 2px ;
+            
+        }
+        .lightbox img:hover {
+            
+            box-shadow: 0px 0px 75px rgb(253, 253, 138);
+            transition: box-shadow 3s ease  ;
+            border-radius: 15px;
+        }
+
+        .lightbox .prev, .lightbox .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.5);
+            border: 10px solid white;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        .lightbox .prev { left: 10px; }
+        .lightbox .next { right: 10px; }
+        .lightbox .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Image Gallery with Lightbox</h2>
+    <div class="row gallery">
+        <div class="col-md-4 mb-3">
+            <img src="/My protfolio/lightbox/images for lightbox/image1.jpg" alt="Nature" class="img-thumbnail">
+        </div>
+        <div class="col-md-4 mb-3">
+            <img src="/My protfolio/lightbox/images for lightbox/image7.jpg" alt="Mountain" class="img-thumbnail">
+        </div>
+        <div class="col-md-4 mb-3">
+            <img src="/My protfolio/lightbox/images for lightbox/images3.jpg" alt="Sky" class="img-thumbnail">
+        </div>
+        <div class="col-md-4 mb-3">
+            <img src="/My protfolio/lightbox/images for lightbox/images4.jpg" alt="Girl" class="img-thumbnail">
+        </div>
+        <div class="col-md-4 mb-3">
+            <img src="/My protfolio/lightbox/images for lightbox/images5.jpg" alt="Parrot" class="img-thumbnail">
+        </div>
+        <div class="col-md-4 mb-3">
+            <img src="/My protfolio/lightbox/images for lightbox/images6.jpg" alt="Elephant" class="img-thumbnail">
+        </div>
+    </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox">
+    <span class="close">&times;</span>
+    <button class="prev">&#10094;</button>
+    <img src="" class="lightbox-img">
+    <button class="next">&#10095;</button>
+</div>
+
+<!-- jQuery and Bootstrap Bundle -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        let currentIndex = 0;
+        let images = $(".gallery img");
+
+        $(".gallery img").click(function () {
+            currentIndex = images.index(this);
+            let src = $(this).attr("src");
+            $(".lightbox-img").attr("src", src);
+            $(".lightbox").fadeIn();
+        });
+
+        $(".close").click(function () {
+            $(".lightbox").fadeOut();
+        });
+
+        $(".prev").click(function () {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            $(".lightbox-img").attr("src", images.eq(currentIndex).attr("src"));
+        });
+
+        $(".next").click(function () {
+            currentIndex = (currentIndex + 1) % images.length;
+            $(".lightbox-img").attr("src", images.eq(currentIndex).attr("src"));
+        });
+
+        $(".lightbox").click(function (e) {
+            if ($(e.target).is(".lightbox")) {
+                $(".lightbox").fadeOut();
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
